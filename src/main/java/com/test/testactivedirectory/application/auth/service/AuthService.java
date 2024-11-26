@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
+import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
+import com.test.testactivedirectory.application.auth.mapper.AuthMapper;
 import com.test.testactivedirectory.application.auth.mapper.UserMapper;
 import com.test.testactivedirectory.application.auth.usecase.IAuthUseCase;
 import com.test.testactivedirectory.application.auth.usecase.UserUseCase;
@@ -42,8 +44,12 @@ public class AuthService implements IAuthUseCase {
 
                 AuthRequestDto userRequestDto = UserMapper.INSTANCE.toUserRequestDto(userModel);
 
+                AuthResponseDto userDto = AuthMapper.INSTANCE.toAuthResponDto(userRequestDto);
+
                 String token = jwtAuthenticationProvider.createToken(userDto);
 
+                userDto.setToken(token);
+                
                 response.put("user", userRequestDto);
                 response.put("message", "User authenticated successfully");
                 response.put("statusCode", 200);
