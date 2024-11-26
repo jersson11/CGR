@@ -1,0 +1,34 @@
+#puerto de la aplicacion 
+server:
+  port: 8000
+  address: 0.0.0.0
+
+# Configuracion  de  la aplicacion  
+spring:
+  application:
+    name: testactivedirectory    
+  profiles:
+    active: dev  # Cambia esto según el entorno: dev, qa, prod
+  #Configuración de la base de datos MySQL
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  output:
+    ansi:
+      enabled: always
+  # Configuración de la seguridad de la aplicación
+  security:
+    user:
+     name: user
+     password: $2a$12$od1exy/dPLCsL3yxbJeFcO/AxDCKyYVBjl/bGB.7GgM3aGOWeWc.q
+  # Configuración de la consola de la base de datos
+logging:
+  level:
+       "[org.hibernate.SQL]": debug
+
+
+    
