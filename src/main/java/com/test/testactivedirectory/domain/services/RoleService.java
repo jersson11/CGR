@@ -10,4 +10,5 @@ public interface RoleService {
     public abstract RoleEntity getById(Long idRole);
 
     public abstract RoleEntity create(RoleEntity roleEntity);
+
 }

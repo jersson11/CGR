@@ -8,7 +8,7 @@ import com.test.testactivedirectory.application.auth.mapper.UserMapper;
 import com.test.testactivedirectory.domain.models.UserModel;
 import com.test.testactivedirectory.domain.repository.IUserRepository;
 import com.test.testactivedirectory.infrastructure.persistence.entity.UserEntity;
-import com.test.testactivedirectory.infrastructure.persistence.repository.AuthRepositoryJpa;
+import com.test.testactivedirectory.infrastructure.persistence.repository.auth.AuthRepositoryJpa;
 
 @Component
 public class AuthRepositoryAdapterImpl implements  IUserRepository {

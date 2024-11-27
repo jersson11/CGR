@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
-import com.test.testactivedirectory.infrastructure.persistence.repository.RoleRepository;
+import com.test.testactivedirectory.infrastructure.persistence.repository.RoleRepositoryJpa;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleRepositoryJpa roleRepository;
 
     @Transactional(readOnly = true)
     @Override

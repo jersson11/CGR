@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 
 @Repository
-public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
+public interface RoleRepositoryJpa extends JpaRepository<RoleEntity, Long> {
 
 }
