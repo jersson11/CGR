@@ -27,6 +27,10 @@ spring:
     user:
      name: user
      password: $2a$12$od1exy/dPLCsL3yxbJeFcO/AxDCKyYVBjl/bGB.7GgM3aGOWeWc.q
+  # Clave secreta JWT
+jwt:
+   secret:
+    key: "U6w3yjuQRNWNRG3IaajKZY8nyMPiu+wFLpj/7evdNEc="  
   # Configuración de la consola de la base de datos
 logging:
   level:

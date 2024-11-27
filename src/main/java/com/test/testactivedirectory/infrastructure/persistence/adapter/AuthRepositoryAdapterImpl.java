@@ -23,7 +23,7 @@ public class AuthRepositoryAdapterImpl implements  IUserRepository {
     public UserModel findBySAMAccountName(String sAMAccountName) {
 
       try {
-        UserEntity userEntity = authRepositoryJpa.findBySAMAccountName(sAMAccountName);
+        UserEntity userEntity = authRepositoryJpa.findBysAMAccountName(sAMAccountName);
         if (userEntity.hashCode() > 0) {
           return UserMapper.INSTANCE.toUserEntity(userEntity);
         }  

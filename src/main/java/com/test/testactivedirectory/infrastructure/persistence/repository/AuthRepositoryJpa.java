@@ -9,6 +9,7 @@ import com.test.testactivedirectory.infrastructure.persistence.entity.UserEntity
 public interface AuthRepositoryJpa extends JpaRepository<UserEntity,Long> { 
 
     // List<User> findBySAMAccountName(String sAMAccountName);
-    UserEntity findBySAMAccountName(String sAMAccountName);
+    UserEntity findBysAMAccountName(String sAMAccountName);
+
     
-}
+} 
