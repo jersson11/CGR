@@ -3,8 +3,7 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/qa_db?useSSL=false
-    username: name
-    password: password
+   
    
   
 

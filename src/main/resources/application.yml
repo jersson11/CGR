@@ -11,6 +11,8 @@ spring:
     active: dev  # Cambia esto según el entorno: dev, qa, prod
   #Configuración de la base de datos MySQL
   datasource:
+    username: root
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
