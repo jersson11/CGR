@@ -43,7 +43,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     /**
      * Lista blanca de URIs
      */
-    private List<String> urlsToSkip = List.of("/api/v1/auth","/auth", "/auth/", "/swagger-ui.html", "/swagger-ui", "/api-docs");
+    private List<String> urlsToSkip = List.of("/test","/api/v1/auth", "/auth", "/auth/", "/swagger-ui.html",
+            "/swagger-ui", "/api-docs");
 
     /**
      * Verifica si a la URI no se le debe aplicar el filtro
