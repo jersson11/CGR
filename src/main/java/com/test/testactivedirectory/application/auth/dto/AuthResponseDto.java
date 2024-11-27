@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class AuthResponseDto {
 
     private String sAMAccountName;
-    private String password;
     private String token;
     private Boolean isEnable;
 

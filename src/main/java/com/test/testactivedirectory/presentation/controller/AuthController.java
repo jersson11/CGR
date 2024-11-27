@@ -29,4 +29,11 @@ public class AuthController {
 
     }
 
+    @PostMapping("/loginActiveDirectory")
+    public ResponseEntity<?> loginActiveDirectory(@RequestBody AuthRequestDto request, final HttpServletRequest servletRequest) throws JsonProcessingException {
+
+        return ResponseEntity.ok(authUseCase.authWithLDAPActiveDirectory(request, servletRequest));
+
+    }
+
 }

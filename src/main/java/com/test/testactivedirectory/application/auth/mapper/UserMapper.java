@@ -24,8 +24,9 @@ public enum UserMapper implements Function<UserEntity, AuthRequestDto> {
     public UserModel toUserEntity(UserEntity userREntity) {
         UserModel userModel = new UserModel();
 
-        userREntity.setSAMAccountName(userModel.getSAMAccountName());
-        userREntity.setPassword(userModel.getPassword());
+        userModel.setId(userREntity.getId());
+        userModel.setSAMAccountName(userREntity.getSAMAccountName());
+        userModel.setPassword(userREntity.getPassword());
 
         return userModel;
     }
