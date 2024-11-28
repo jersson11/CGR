@@ -1,4 +1,4 @@
-package com.test.testactivedirectory.infrastructure.persistence.repository;
+package com.test.testactivedirectory.infrastructure.persistence.repository.role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

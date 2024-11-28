@@ -6,8 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.test.testactivedirectory.domain.repository.IRoleRepository;
+import com.test.testactivedirectory.infrastructure.exception.customException.ResourceNotFoundException;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
-import com.test.testactivedirectory.infrastructure.persistence.repository.RoleRepositoryJpa;
+import com.test.testactivedirectory.infrastructure.persistence.repository.role.RoleRepositoryJpa;
 
 @Component
 public class RoleRepositoryAdapterImpl implements IRoleRepository {
@@ -27,8 +28,8 @@ public class RoleRepositoryAdapterImpl implements IRoleRepository {
     @Transactional(readOnly = true)
     @Override
     public RoleEntity findById(Long idRole) {
-        return this.roleRepositoryJpa.findById(idRole).orElseThrow(
-                () -> new UnsupportedOperationException());
+        return this.roleRepositoryJpa.findById(idRole)
+                .orElseThrow(() -> new ResourceNotFoundException("el rol con id=" + idRole + " no existe"));
     }
 
     @Transactional
@@ -41,17 +42,20 @@ public class RoleRepositoryAdapterImpl implements IRoleRepository {
     @Transactional
     @Override
     public RoleEntity update(RoleEntity roleEntity) {
-        return this.roleRepositoryJpa.save(roleEntity);
+        return this.roleRepositoryJpa.save(this.roleRepositoryJpa.findById(roleEntity.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("el rol con id=" + roleEntity.getId() + " no existe")));
     }
 
     @Transactional
     @Override
     public RoleEntity activateOrDeactivate(Long idRole) {
         RoleEntity roleEntity = this.roleRepositoryJpa.findById(idRole).orElseThrow(
-                () -> new UnsupportedOperationException());
+                () -> new ResourceNotFoundException("el rol con id=" + idRole + " no existe"));
 
-        if (roleEntity.isEnable()) roleEntity.setEnable(false);
-        else roleEntity.setEnable(true);
+        if (roleEntity.isEnable())
+            roleEntity.setEnable(false);
+        else
+            roleEntity.setEnable(true);
 
         return roleEntity;
     }

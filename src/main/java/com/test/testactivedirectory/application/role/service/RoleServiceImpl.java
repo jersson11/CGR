@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.test.testactivedirectory.application.role.interfaces.RoleService;
+import com.test.testactivedirectory.application.role.usecase.RoleService;
 import com.test.testactivedirectory.domain.repository.IRoleRepository;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 

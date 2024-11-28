@@ -1,4 +1,4 @@
-package com.test.testactivedirectory.application.role.interfaces;
+package com.test.testactivedirectory.application.role.usecase;
 
 import java.util.List;
 
