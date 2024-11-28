@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
-import com.test.testactivedirectory.infrastructure.persistence.repository.RoleRepositoryJpa;
+import com.test.testactivedirectory.infrastructure.persistence.repository.role.RoleRepositoryJpa;
 
 @RestController()
 @RequestMapping("/test")

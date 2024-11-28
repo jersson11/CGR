@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.testactivedirectory.application.role.interfaces.RoleService;
+import com.test.testactivedirectory.application.role.usecase.RoleService;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 
 import jakarta.validation.Valid;
