@@ -42,21 +42,25 @@ public class SecurityConfig {
                 .exceptionHandling(t -> t.accessDeniedHandler(accessDeniedHandlerException))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**","/api/v1/auth/**", "/auth**").permitAll();
-                    auth.requestMatchers("/admin/**").hasAnyRole(RoleUtil.ADMIN, RoleUtil.FUNCIONARIO, RoleUtil.Usuario);
+                    auth.requestMatchers("/auth/**", "/api/v1/auth/**", "/auth**").permitAll();
+                    auth.requestMatchers("/test").permitAll();
+                    auth.requestMatchers("/api/v1/role/**").permitAll();
+                    auth.requestMatchers("/api/v1/user**").permitAll();
+                    auth.requestMatchers("/admin/**").hasAnyRole(RoleUtil.ADMIN, RoleUtil.FUNCIONARIO,
+                            RoleUtil.Usuario);
                     auth.requestMatchers("/user/**", "/user**").hasAnyRole(RoleUtil.FUNCIONARIO,
                             RoleUtil.ADMIN, RoleUtil.Usuario);
                     auth.anyRequest().authenticated();
                 });
 
         // http.exceptionHandling(exceptions -> exceptions
-        //         .authenticationEntryPoint(customAuthenticationEntryPoint)
-        //         .accessDeniedHandler(customAccessDeniedHandler));
-        
-                http.headers(headers -> headers
+        // .authenticationEntryPoint(customAuthenticationEntryPoint)
+        // .accessDeniedHandler(customAccessDeniedHandler));
+
+        http.headers(headers -> headers
                 .httpStrictTransportSecurity(hsts -> hsts
-                    .includeSubDomains(true)
-                    .maxAgeInSeconds(31536000)));        
+                        .includeSubDomains(true)
+                        .maxAgeInSeconds(31536000)));
 
         return http.build();
     }
