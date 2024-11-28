@@ -16,8 +16,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-// @Getter
-// @Setter
 @Data
 @Entity
 @Table(name = "users")
@@ -37,4 +35,10 @@ public class UserEntity {
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
             @UniqueConstraint(columnNames = { "user_id", "role_id" }) })
     private List<RoleEntity> roles;
+
+    public void addRol(RoleEntity roleEntity) {
+        this.roles.add(roleEntity);
+        roleEntity.getUsers().add(this);
+    }
+
 }
