@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.testactivedirectory.application.role.dto.RoleRequestDto;
 import com.test.testactivedirectory.application.role.usecase.RoleService;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 
@@ -53,7 +54,7 @@ public class RoleController extends AbstractController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        RoleEntity role = this.roleService.activateOrDeactivate(id);
+        RoleRequestDto role = this.roleService.activateOrDeactivate(id);
         return ResponseEntity.ok(role);
     }
 
