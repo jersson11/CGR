@@ -12,7 +12,7 @@ spring:
   #Configuración de la base de datos MySQL
   datasource:
     username: root
-    password: 12345
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
