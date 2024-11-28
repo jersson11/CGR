@@ -12,7 +12,7 @@ import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
 import com.test.testactivedirectory.application.auth.mapper.AuthMapper;
 import com.test.testactivedirectory.application.auth.mapper.UserMapper;
 import com.test.testactivedirectory.application.auth.usecase.IAuthUseCase;
-import com.test.testactivedirectory.application.auth.usecase.UserUseCase;
+import com.test.testactivedirectory.application.user.usecase.UserUseCase;
 import com.test.testactivedirectory.domain.models.ActiveDirectoryUserModel;
 import com.test.testactivedirectory.domain.models.UserModel;
 import com.test.testactivedirectory.domain.repository.IActiveDirectoryUserRepository;

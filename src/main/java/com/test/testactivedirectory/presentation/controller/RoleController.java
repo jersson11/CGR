@@ -33,7 +33,7 @@ public class RoleController extends AbstractController {
     @GetMapping
     public Map<String, Object> getAll() {
         Map<String, Object> json = new HashMap<>();
-        json.put("roles", this.roleService.findAll());
+        json.put("usuarios", this.roleService.findAll());
         return json;
     }
 

@@ -18,8 +18,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-// @Getter
-// @Setter
 @Data
 @Entity
 @Table(name = "users")
@@ -40,6 +38,14 @@ public class UserEntity {
             @UniqueConstraint(columnNames = { "user_id", "role_id" }) })
     private List<RoleEntity> roles;
 
+<<<<<<< HEAD
     @OneToMany(mappedBy="user")
     private List<LogEntity> logs = new ArrayList<>();
+=======
+    public void addRol(RoleEntity roleEntity) {
+        this.roles.add(roleEntity);
+        roleEntity.getUsers().add(this);
+    }
+
+>>>>>>> origin/developer
 }
