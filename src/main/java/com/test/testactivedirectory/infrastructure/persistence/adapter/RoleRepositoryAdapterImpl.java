@@ -1,12 +1,15 @@
 package com.test.testactivedirectory.infrastructure.persistence.adapter;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.test.testactivedirectory.domain.repository.IRoleRepository;
+import com.test.testactivedirectory.infrastructure.exception.customException.ResourceNotFoundException;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
-import com.test.testactivedirectory.infrastructure.persistence.repository.RoleRepositoryJpa;
+import com.test.testactivedirectory.infrastructure.persistence.repository.role.RoleRepositoryJpa;
 
 @Component
 public class RoleRepositoryAdapterImpl implements IRoleRepository {
@@ -17,10 +20,49 @@ public class RoleRepositoryAdapterImpl implements IRoleRepository {
         this.roleRepositoryJpa = roleRepositoryJpa;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<RoleEntity> findAll() {
+        return this.roleRepositoryJpa.findAll();
+    }
 
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    @Transactional(readOnly = true)
+    @Override
+    public RoleEntity findById(Long idRole) {
+        return this.roleRepositoryJpa.findById(idRole)
+                .orElseThrow(() -> new ResourceNotFoundException("el rol con id=" + idRole + " no existe"));
+    }
+
+    @Transactional
+    @Override
+    public RoleEntity create(RoleEntity roleEntity) {
+        roleEntity.setId(null);
+        return this.roleRepositoryJpa.save(roleEntity);
+    }
+
+    @Transactional
+    @Override
+    public RoleEntity update(RoleEntity roleEntity) {
+        Optional<RoleEntity> roleOptional = this.roleRepositoryJpa.findById(roleEntity.getId());
+        if (roleOptional.isPresent())
+            return this.roleRepositoryJpa.save(roleEntity);
+        else
+            throw new ResourceNotFoundException("el rol con id=" + roleEntity.getId() + " no existe");
+
+    }
+
+    @Transactional
+    @Override
+    public RoleEntity activateOrDeactivate(Long idRole) {
+        RoleEntity roleEntity = this.roleRepositoryJpa.findById(idRole).orElseThrow(
+                () -> new ResourceNotFoundException("el rol con id=" + idRole + " no existe"));
+
+        if (roleEntity.isEnable())
+            roleEntity.setEnable(false);
+        else
+            roleEntity.setEnable(true);
+
+        return roleEntity;
     }
 
 }
