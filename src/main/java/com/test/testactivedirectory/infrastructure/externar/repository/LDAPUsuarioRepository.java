@@ -1,9 +1,15 @@
 package com.test.testactivedirectory.infrastructure.externar.repository;
 
 import org.springframework.stereotype.Component;
-import com.unboundid.ldap.sdk.*;
-import com.test.testactivedirectory.domain.models.ActiveDirectoryUserModel;
+
 import com.test.testactivedirectory.domain.repository.IActiveDirectoryUserRepository;
+import com.unboundid.ldap.sdk.LDAPBindException;
+import com.unboundid.ldap.sdk.LDAPConnection;
+import com.unboundid.ldap.sdk.LDAPException;
+import com.unboundid.ldap.sdk.SearchRequest;
+import com.unboundid.ldap.sdk.SearchResult;
+import com.unboundid.ldap.sdk.SearchResultEntry;
+import com.unboundid.ldap.sdk.SearchScope;
 
 @Component
 public class LDAPUsuarioRepository implements IActiveDirectoryUserRepository {

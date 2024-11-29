@@ -6,19 +6,14 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.test.testactivedirectory.application.auth.dto.ActiveDirectoryUserDto;
 import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
 import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
 import com.test.testactivedirectory.application.auth.mapper.AuthMapper;
-import com.test.testactivedirectory.application.auth.mapper.UserMapper;
 import com.test.testactivedirectory.application.auth.usecase.IAuthUseCase;
-import com.test.testactivedirectory.application.user.usecase.UserUseCase;
-import com.test.testactivedirectory.domain.models.ActiveDirectoryUserModel;
 import com.test.testactivedirectory.domain.models.UserModel;
 import com.test.testactivedirectory.domain.repository.IActiveDirectoryUserRepository;
 import com.test.testactivedirectory.domain.repository.IUserRepository;
 import com.test.testactivedirectory.infrastructure.security.Jwt.providers.JwtAuthenticationProvider;
-import com.unboundid.ldap.sdk.SearchResultEntry;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -50,6 +45,7 @@ public class AuthService implements IAuthUseCase {
                 String token = jwtAuthenticationProvider.createToken(userDto);
 
                 userDto.setToken(token);
+                userDto.setIsEnable(true);
 
                 response.put("user", userDto);
                 response.put("message", "User authenticated successfully");
@@ -86,6 +82,7 @@ public class AuthService implements IAuthUseCase {
                 String token = jwtAuthenticationProvider.createToken(userRequestDto);
 
                 userRequestDto.setToken(token);
+                userRequestDto.setIsEnable(true);
 
                 response.put("user", userRequestDto);
                 response.put("message", "User authenticated successfully");
@@ -98,7 +95,8 @@ public class AuthService implements IAuthUseCase {
             // TODO: handle exception
             System.err.println("Error en la capa de aplicaciontion en service: " + e.getMessage());
         }
-        return null;
+        response.put("message", "User not authenticated");
+        return response;
     }
 
 }
