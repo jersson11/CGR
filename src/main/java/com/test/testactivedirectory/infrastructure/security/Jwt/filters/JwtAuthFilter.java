@@ -1,9 +1,9 @@
 package com.test.testactivedirectory.infrastructure.security.Jwt.filters;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,11 +18,10 @@ import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
 import com.test.testactivedirectory.infrastructure.security.Jwt.providers.JwtAuthenticationProvider;
 import com.test.testactivedirectory.infrastructure.security.Jwt.services.JwtService;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -45,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      */
     private List<String> urlsToSkip = List.of(
             "/api/v1/auth",
-            "/api/v1/",            
+            "/api/v1/",
             "/auth",
             "/auth/",
             "/swagger-ui.html",

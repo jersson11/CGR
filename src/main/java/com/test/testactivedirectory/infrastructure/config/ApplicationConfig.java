@@ -1,5 +1,6 @@
 package com.test.testactivedirectory.infrastructure.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -18,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 public class ApplicationConfig {
 
-
-    
     /**
      * Bean de Password Encoder para inyeccion
      * 
@@ -36,10 +35,14 @@ public class ApplicationConfig {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return new ObjectMapper();
     }
-    
+
+    @Bean
+    ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
     // @Bean
     // public JwtAuthFilter jwtAuthFilter() {
-    //     return new JwtAuthFilter(jwtAuthenticationProvider);
+    // return new JwtAuthFilter(jwtAuthenticationProvider);
     // }
 }
