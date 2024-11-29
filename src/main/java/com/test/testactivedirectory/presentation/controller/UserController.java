@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.testactivedirectory.application.user.dto.UserWithRolesRequestDto;
 import com.test.testactivedirectory.application.user.usecase.UserUseCase;
-import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 
 import jakarta.validation.Valid;
 
@@ -35,11 +34,9 @@ public class UserController extends AbstractController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody UserWithRolesRequestDto rolesRequestDto) {
-        // return this.processRequest(result,
-        // () ->
-        // ResponseEntity.ok(this.userService.assignRolesToUser(rolesRequestDto)));
-        return ResponseEntity.ok(this.userService.assignRolesToUser(rolesRequestDto));
+    public ResponseEntity<?> create(@Valid @RequestBody UserWithRolesRequestDto rolesRequestDto, BindingResult result) {
+        return this.processRequest(result,
+                () -> ResponseEntity.ok(this.userService.assignRolesToUser(rolesRequestDto)));
     }
 
 }
