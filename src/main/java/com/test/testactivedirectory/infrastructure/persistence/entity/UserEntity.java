@@ -40,6 +40,7 @@ public class UserEntity {
 
     @OneToMany(mappedBy="user")
     private List<LogEntity> logs = new ArrayList<>();
+    
     public void addRol(RoleEntity roleEntity) {
         this.roles.add(roleEntity);
         roleEntity.getUsers().add(this);
