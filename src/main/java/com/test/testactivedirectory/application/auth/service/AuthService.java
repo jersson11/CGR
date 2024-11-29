@@ -10,6 +10,7 @@ import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
 import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
 import com.test.testactivedirectory.application.auth.mapper.AuthMapper;
 import com.test.testactivedirectory.application.auth.usecase.IAuthUseCase;
+import com.test.testactivedirectory.application.logs.usecase.LogUseCase;
 import com.test.testactivedirectory.domain.models.UserModel;
 import com.test.testactivedirectory.domain.repository.IActiveDirectoryUserRepository;
 import com.test.testactivedirectory.domain.repository.IUserRepository;
@@ -26,6 +27,8 @@ public class AuthService implements IAuthUseCase {
     private final IActiveDirectoryUserRepository activeDirectoryUserRepository;
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
+
+    private final LogUseCase logService;
 
     @Override
     public Map<String, Object> signIn(AuthRequestDto userRequest, HttpServletRequest servletRequest)
@@ -77,6 +80,7 @@ public class AuthService implements IAuthUseCase {
 
             if (isAccountValid) {
 
+                this.logService.createLog(userRequest.getSAMAccountName());
                 AuthResponseDto userRequestDto = AuthMapper.INSTANCE.toAuthResponDto(userRequest);
 
                 String token = jwtAuthenticationProvider.createToken(userRequestDto);

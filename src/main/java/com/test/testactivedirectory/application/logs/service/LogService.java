@@ -1,8 +1,10 @@
 package com.test.testactivedirectory.application.logs.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.test.testactivedirectory.application.logs.dto.LogDto;
 import com.test.testactivedirectory.application.logs.usecase.LogUseCase;
@@ -21,13 +23,16 @@ public class LogService implements LogUseCase {
     private final DtoMapper dtoMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<LogDto> logFindAll() {
         return this.dtoMapper.convertToListDto(this.adapterLogRepository.logFindAll(), LogDto.class);
     }
 
     @Override
-    public LogEntity createLog(LogEntity logEntity, Long idUser) {
-        return this.adapterLogRepository.createLog(logEntity, idUser);
+    @Transactional
+    public LogEntity createLog(String userName) {
+        LogEntity logEntity = new LogEntity("n/a", new Date(), true, userName);
+        return this.adapterLogRepository.createLog(logEntity, userName);
     }
 
 }

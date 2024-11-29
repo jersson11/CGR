@@ -8,6 +8,6 @@ public interface ILogRepository {
 
     public abstract List<LogEntity> logFindAll();
 
-    public abstract LogEntity createLog(LogEntity logEntity, Long idUser);
+    public abstract LogEntity createLog(LogEntity logEntity, String userName);
 
 }

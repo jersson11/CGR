@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.unboundid.util.NotNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +36,7 @@ public class LogEntity {
     @Column(name = "email", nullable = false, length = 100)
     private String correo;
 
-    @NotBlank
+    @NotNull
     @Column(name = "date_session_start", updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Bogota")
     private Date data_session_start;
@@ -50,12 +51,11 @@ public class LogEntity {
     public LogEntity() {
     }
 
-    public LogEntity(String correo, Date data_session_start, boolean enable, String name_user, UserEntity user) {
+    public LogEntity(String correo, Date data_session_start, boolean enable, String name_user) {
         this.correo = correo;
         this.data_session_start = data_session_start;
         this.enable = enable;
         this.name_user = name_user;
-        this.user = user;
     }
 
 }
