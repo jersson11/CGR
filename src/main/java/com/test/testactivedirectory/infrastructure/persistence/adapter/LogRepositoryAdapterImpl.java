@@ -24,4 +24,10 @@ public class LogRepositoryAdapterImpl implements ILogRepository {
         return this.logRepositoryJpa.findAll();
     }
 
+    @Override
+    public LogEntity createLog(LogEntity logEntity) {
+        LogEntity log = this.logRepositoryJpa.save(logEntity);
+        return log;
+    }
+
 }
