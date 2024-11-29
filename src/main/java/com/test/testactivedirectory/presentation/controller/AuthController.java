@@ -1,6 +1,5 @@
 package com.test.testactivedirectory.presentation.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
-import com.test.testactivedirectory.application.auth.service.MenuService;
 import com.test.testactivedirectory.application.auth.usecase.IAuthUseCase;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +23,12 @@ public class AuthController {
 
     public AuthController(IAuthUseCase authUseCase) {
         this.authUseCase = authUseCase;
+    }
+
+
+    @GetMapping("/health")
+    public ResponseEntity<String> checkHealth() {
+        return ResponseEntity.ok("Service is running!");
     }
 
     @PostMapping("/login")

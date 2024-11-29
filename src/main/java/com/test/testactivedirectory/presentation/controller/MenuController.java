@@ -15,6 +15,11 @@ public class MenuController {
     @Autowired
     private MenuService menuTest;  
 
+    @GetMapping("/health")
+    public ResponseEntity<String> checkHealth() {
+        return ResponseEntity.ok("Service is running!");
+    }
+
     @GetMapping("/list")
     public ResponseEntity<?> getMenus() {
         return ResponseEntity.ok(menuTest.getMenus());

@@ -82,6 +82,7 @@ public class AuthService implements IAuthUseCase {
                 String token = jwtAuthenticationProvider.createToken(userRequestDto);
 
                 userRequestDto.setToken(token);
+                userRequestDto.setIsEnable(true);
 
                 response.put("user", userRequestDto);
                 response.put("message", "User authenticated successfully");
@@ -94,7 +95,8 @@ public class AuthService implements IAuthUseCase {
             // TODO: handle exception
             System.err.println("Error en la capa de aplicaciontion en service: " + e.getMessage());
         }
-        return null;
+        response.put("message", "User not authenticated");
+        return response;
     }
 
 }
