@@ -1,6 +1,7 @@
 package com.test.testactivedirectory.infrastructure.persistence.adapter;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +43,12 @@ public class RoleRepositoryAdapterImpl implements IRoleRepository {
     @Transactional
     @Override
     public RoleEntity update(RoleEntity roleEntity) {
-        return this.roleRepositoryJpa.save(this.roleRepositoryJpa.findById(roleEntity.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("el rol con id=" + roleEntity.getId() + " no existe")));
+        Optional<RoleEntity> roleOptional = this.roleRepositoryJpa.findById(roleEntity.getId());
+        if (roleOptional.isPresent())
+            return this.roleRepositoryJpa.save(roleEntity);
+        else
+            throw new ResourceNotFoundException("el rol con id=" + roleEntity.getId() + " no existe");
+
     }
 
     @Transactional

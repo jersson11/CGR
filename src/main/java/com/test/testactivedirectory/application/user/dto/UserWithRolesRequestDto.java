@@ -2,14 +2,13 @@ package com.test.testactivedirectory.application.user.dto;
 
 import java.util.List;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class UserWithRolesRequestDto {
 
-    @NotBlank
+    @NotNull
     private Long idUser;
 
     @NotNull
