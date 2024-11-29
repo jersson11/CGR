@@ -50,7 +50,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/auth/",
             "/swagger-ui.html",
             "/swagger-ui",
-            "/api-docs");
+            "/api-docs",
+            "/user/",
+            "/role/**",
+            "/log/");
 
     /**
      * Verifica si a la URI no se le debe aplicar el filtro
@@ -66,8 +69,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         System.out.println("headers:" + request);
         System.out.println("headers:" + request.getHeaders(HttpHeaders.AUTHORIZATION).toString());
         String requestUri = request.getRequestURI();
-        return true;
-        // return urlsToSkip.stream().anyMatch(uri -> requestUri.startsWith(uri));
+        return urlsToSkip.stream().anyMatch(uri -> requestUri.startsWith(uri));
     }
 
     /**
