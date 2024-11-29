@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/user")
 public class UserController extends AbstractController {
 
-    private UserUseCase userService;
+    private final UserUseCase userService;
 
     public UserController(UserUseCase userService) {
         this.userService = userService;

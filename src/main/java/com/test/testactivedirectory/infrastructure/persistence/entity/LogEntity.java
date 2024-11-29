@@ -21,17 +21,18 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "logs")
 public class LogEntity {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NotBlank
-    @Column(name = "name_user", nullable=false, length = 100)
+    @Column(name = "name_user", nullable = false, length = 100)
     private String name_user;
 
     @NotBlank
-    @Column(name = "email", nullable=false, length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String correo;
 
     @NotBlank
@@ -39,11 +40,22 @@ public class LogEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Bogota")
     private Date data_session_start;
 
-    @Column(name = "enable", nullable=false)
+    @Column(name = "enable", nullable = false)
     private boolean enable;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    public LogEntity() {
+    }
+
+    public LogEntity(String correo, Date data_session_start, boolean enable, String name_user, UserEntity user) {
+        this.correo = correo;
+        this.data_session_start = data_session_start;
+        this.enable = enable;
+        this.name_user = name_user;
+        this.user = user;
+    }
 
 }
