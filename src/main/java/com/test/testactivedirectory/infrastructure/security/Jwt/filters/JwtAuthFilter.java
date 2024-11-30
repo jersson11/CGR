@@ -52,7 +52,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/api-docs",
             "/user/",
             "/role/**",
-            "/log/");
+            "/log/",
+            "/api/csv/cargar",
+            "test/**");
 
     /**
      * Verifica si a la URI no se le debe aplicar el filtro

@@ -24,6 +24,7 @@ spring:
       enabled: always
   # Configuración de la seguridad de la aplicación
   security:
+    enabled: false
     user:
      name: user
      password: $2a$12$od1exy/dPLCsL3yxbJeFcO/AxDCKyYVBjl/bGB.7GgM3aGOWeWc.q
