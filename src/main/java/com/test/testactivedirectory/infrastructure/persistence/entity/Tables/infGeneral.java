@@ -52,19 +52,19 @@ public class infGeneral {
     private String tipoNorma;
 
     @Column(nullable = false)
-    private float recauVigenActualSinFondos;
+    private String Reacau1;
 
     @Column(nullable = false)
-    private float recauVigenActualConFondos;
+    private String Reacau2;
 
     @Column(nullable = false)
-    private float recauVigenAnteriorSinFondos;
+    private String Reacau3;
 
     @Column(nullable = false)
-    private float recauVigenAnteriorConFondos;
+    private String Reacau4;
 
     @Column(nullable = false)
-    private float totalRecaudo;
+    private String totalRecaudo;
 
     // @ManyToOne
     // @JoinColumn(name = "menu_id", nullable = false)

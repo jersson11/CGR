@@ -48,7 +48,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/v1/log/**").permitAll();
                     auth.requestMatchers("/api/v1/role/**").permitAll();
                     auth.requestMatchers("/api/v1/user/**").permitAll();
-                    auth.requestMatchers("/api/csv/cargar/**").permitAll();
+                    auth.requestMatchers("/api/csv/**").permitAll();
                     auth.requestMatchers("/admin/**").hasAnyRole(RoleUtil.ADMIN, RoleUtil.FUNCIONARIO,
                             RoleUtil.Usuario);
                     auth.requestMatchers("/user/**").hasAnyRole(RoleUtil.FUNCIONARIO,

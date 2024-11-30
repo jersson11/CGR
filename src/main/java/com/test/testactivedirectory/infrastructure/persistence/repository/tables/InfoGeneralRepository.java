@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import com.test.testactivedirectory.infrastructure.persistence.entity.Tables.DatosDept;
 import com.test.testactivedirectory.infrastructure.persistence.entity.Tables.infGeneral;
 
-public interface MiEntidadRepository extends JpaRepository <DatosDept, Integer> {
+
+
+public interface InfoGeneralRepository extends JpaRepository <infGeneral, Integer> {
 
 
 }

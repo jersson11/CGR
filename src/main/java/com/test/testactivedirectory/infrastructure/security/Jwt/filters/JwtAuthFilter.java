@@ -54,6 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/role/**",
             "/log/",
             "/api/csv/cargar",
+            "/api/csv/carGen",
             "test/**");
 
     /**
