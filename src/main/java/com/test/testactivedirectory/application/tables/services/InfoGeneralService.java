@@ -53,7 +53,8 @@ public class InfoGeneralService {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al procesar el archivo CSV: " + e.getMessage());
+            System.out.println(e);
+            throw new RuntimeException("Error al procesar el archivo CSV:" + e);
         }
     }
     
