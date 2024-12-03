@@ -25,7 +25,6 @@ public class LogRepositoryAdapterImpl implements ILogRepository {
         this.userRepositoryJpa = userRepositoryJpa;
     }
 
-
     @Transactional(readOnly = true)
     @Override
     public List<LogEntity> logFindAll() {
@@ -34,16 +33,15 @@ public class LogRepositoryAdapterImpl implements ILogRepository {
 
     @Transactional
     @Override
-    public LogEntity createLog(LogEntity logEntity, Long idUser) {
-        Optional<UserEntity> userEntityOptional = this.userRepositoryJpa.findById(idUser);
-        if (userEntityOptional != null) {
+    public LogEntity createLog(LogEntity logEntity, String userName) {
+        Optional<UserEntity> userEntityOptional = this.userRepositoryJpa.findBySAMAccountName(userName);
+        if (userEntityOptional.isPresent()) {
             logEntity.setUser(userEntityOptional.get());
+            LogEntity log = this.logRepositoryJpa.save(logEntity);
+            return log;
         } else {
-            throw new ResourceNotFoundException("el usuario con id=" + logEntity + " no existe");
+            throw new ResourceNotFoundException("el usuario con nombre=" + userName + " no existe");
         }
-        
-        LogEntity log = this.logRepositoryJpa.save(logEntity);
-        return log;
     }
 
 }

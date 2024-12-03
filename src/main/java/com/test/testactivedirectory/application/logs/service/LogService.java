@@ -1,5 +1,6 @@
 package com.test.testactivedirectory.application.logs.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,8 +27,9 @@ public class LogService implements LogUseCase {
     }
 
     @Override
-    public LogEntity createLog(LogEntity logEntity, Long idUser) {
-        return this.adapterLogRepository.createLog(logEntity, idUser);
+    public LogEntity createLog(String userName) {
+        LogEntity logEntity = new LogEntity("n/a", new Date(), true, userName);
+        return this.adapterLogRepository.createLog(logEntity, userName);
     }
 
 }

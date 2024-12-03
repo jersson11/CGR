@@ -8,5 +8,5 @@ import com.test.testactivedirectory.infrastructure.persistence.entity.LogEntity;
 public interface LogUseCase {
     public abstract List<LogDto> logFindAll();
 
-    public abstract LogEntity createLog(LogEntity logEntity, Long idUser);
+    public abstract LogEntity createLog(String userName);
 }
