@@ -1,6 +1,9 @@
 package com.test.testactivedirectory.infrastructure.externar.repository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -101,6 +104,22 @@ public class LDAPUsuarioRepository implements IActiveDirectoryUserRepository {
                 System.out.println("full name: " + entry.getAttributeValue("displayName"));
                 System.out.println("email: " + entry.getAttributeValue("userPrincipalName"));
                 System.out.println("teléfono: " + entry.getAttributeValue("mobile"));
+
+                // Obtener el estado de activo/inactivo
+                String userAccountControl = entry.getAttributeValue("userAccountControl");
+                if (userAccountControl != null) {
+                    int uacValue = Integer.parseInt(userAccountControl);
+                    boolean isDisabled = (uacValue & 0x2) != 0; // Verificar si el bit está configurado
+                    System.out.println("Estado de la cuenta: " + (isDisabled ? "Inactiva" : "Activa"));
+                }
+
+                // Obtener y formatear la última modificación
+                String whenChanged = entry.getAttributeValue("whenChanged");
+                if (whenChanged != null) {
+                    String formattedDate = formatWhenChanged(whenChanged);
+                    System.out.println("Última modificación: " + formattedDate);
+                }
+
                 System.out.println("---------------------------------------------------------");
 
                 users.add(userEntity);
@@ -114,5 +133,25 @@ public class LDAPUsuarioRepository implements IActiveDirectoryUserRepository {
         }
 
         return users;
+    }
+
+    private String formatWhenChanged(String whenChanged) {
+        try {
+            // Formato original: yyyyMMddHHmmss.0Z
+            SimpleDateFormat adFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            SimpleDateFormat desiredFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            // Remover ".0Z" del valor original
+            if (whenChanged.contains(".")) {
+                whenChanged = whenChanged.split("\\.")[0];
+            }
+
+            Date date = adFormat.parse(whenChanged);
+            return desiredFormat.format(date);
+
+        } catch (ParseException e) {
+            System.err.println("Error al formatear la fecha whenChanged: " + whenChanged);
+            return "Fecha inválida";
+        }
     }
 }
