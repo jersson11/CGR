@@ -1,6 +1,7 @@
 package com.test.testactivedirectory.application.user.dto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.test.testactivedirectory.application.role.dto.RoleRequestDto;
@@ -15,6 +16,18 @@ public class UserWithRolesResponseDto {
 
     private String userName;
 
+    private String fullName;
+
+    private String email;
+
+    private String phone;
+
+    private boolean enabled;
+
+    private Date dateModify;
+
+    private String cargo;
+
     private List<RoleRequestDto> roles = new ArrayList<>();
 
     public void addRole(List<RoleEntity> rolesEntity) {
@@ -24,7 +37,6 @@ public class UserWithRolesResponseDto {
             role2.setName(role.getName());
             role2.setDescription(role.getDescription());
             role2.setEnable(role.isEnable());
-
             roles.add(role2);
         });
 

@@ -31,6 +31,13 @@ public class UserServiceImpl implements UserUseCase {
             var userResponsive = new UserWithRolesResponseDto();
             userResponsive.setIdUser(user.getId());
             userResponsive.setUserName(user.getSAMAccountName());
+            userResponsive.setFullName(user.getFullName());
+            userResponsive.setEmail(user.getEmail());
+            userResponsive.setPhone(user.getPhone());
+            userResponsive.setEnabled(user.isEnabled());
+            userResponsive.setDateModify(user.getDateModify());
+            userResponsive.setCargo(user.getCargo());
+
             userResponsive.addRole(user.getRoles());
 
             users.add(userResponsive);
