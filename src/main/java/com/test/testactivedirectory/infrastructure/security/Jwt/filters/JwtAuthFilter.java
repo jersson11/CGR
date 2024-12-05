@@ -51,6 +51,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/swagger-ui",
             "/api-docs",
             "/user/",
+            "/api/v1/user/synchronize",
+            "/user/synchronize",
             "/role/**",
             "/log/",
             "/api/csv/cargar",
@@ -84,8 +86,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      * @throws ServletException
      * @throws IOException
      * @throws UnauthorizedException - Si no tiene la cabezera
-     * HttpHeaders.AUTHORIZATION - Si tiene más de dos elementos en al cabezera
-     * o no tiene 'Bearer' - Si el token no es valido
+     *                               HttpHeaders.AUTHORIZATION - Si tiene más de dos
+     *                               elementos en al cabezera
+     *                               o no tiene 'Bearer' - Si el token no es valido
      */
     @SuppressWarnings("null")
     @Override
@@ -177,7 +180,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      * @throws IOException
      * @throws JsonProcessingException
      * @apiNote Metodo encargado de enviar la respuesta al cliente cuando
-     * exixste una exception o validacion de token
+     *          exixste una exception o validacion de token
      */
     private void responseHandler(HttpServletResponse response, String ExceptionHandler, int status) throws IOException {
 

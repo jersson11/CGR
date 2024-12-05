@@ -2,7 +2,7 @@
 # Configuración de la base de datos MySQL
 spring:
   datasource:
-    url: jdbc:sqlserver://192.168.2.21:1433;databaseName=cuipo_dev;encrypt=true;trustServerCertificate=true;
+    url: jdbc:sqlserver://192.168.2.21:1433;databaseName=CGR_general;encrypt=true;trustServerCertificate=true;
    
    
   
