@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserUseCase {
             userResponsive.setFullName(user.getFullName());
             userResponsive.setEmail(user.getEmail());
             userResponsive.setPhone(user.getPhone());
-            userResponsive.setEnabled(user.isEnabled());
+            userResponsive.setEnabled(user.getEnabled());
             userResponsive.setDateModify(user.getDateModify());
             userResponsive.setCargo(user.getCargo());
 

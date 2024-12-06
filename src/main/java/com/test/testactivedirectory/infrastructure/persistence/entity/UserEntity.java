@@ -42,7 +42,7 @@ public class UserEntity {
     private String phone;
 
     @Column(name = "enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     @Column(name = "date_modify")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Bogota")
@@ -68,7 +68,7 @@ public class UserEntity {
         this.fullName = userAD.getFullName();
         this.email = userAD.getEmail();
         this.phone = userAD.getPhone();
-        this.enabled = userAD.isEnabled();
+        this.enabled = userAD.getEnabled();
         this.dateModify = userAD.getDateModify();
         this.cargo = userAD.getCargo();
     }
