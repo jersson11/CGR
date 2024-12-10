@@ -22,7 +22,9 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
+import com.test.testactivedirectory.application.role.dto.RoleDto;
 import com.test.testactivedirectory.application.user.dto.UserDto;
+import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,24 +45,25 @@ public class JwtService {
      * @param customerJwt Cliente a utilizar en la creacion del jwt
      * @return Jwt creado
      */
-    public String createToken(AuthResponseDto customerJwt) {
+    public String createToken(AuthResponseDto customerJwt, List<RoleEntity> roles) {
+
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3600000 * 2); // 1 hora en milisegundos
 
-        Algorithm algorithm = Algorithm.HMAC256(secretKey);
-
         // String scope = customerJwt.getAuthorities().stream()
         // .map(GrantedAuthority::getAuthority)
         // .collect(Collectors.joining(" "));
-        // String scope =
+        List<String> rolesClaim = roles.stream().map(RoleEntity::getName).toList();
+
         // customerJwt.getRoles().stream().map(RoleDto::getAuthority).collect(Collectors.joining("
         // "));
-
         // System.out.println("============Scoperoles================>" + scope);
 
         String tokenCreated = JWT.create()
                 .withClaim("userName", customerJwt.getSAMAccountName())
+                .withClaim("roles", rolesClaim)
                 .withClaim("isEnabled", customerJwt.getIsEnable())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
@@ -89,6 +92,11 @@ public class JwtService {
 
         String email = JWT.decode(token).getClaim("userName").asString();
 
+        try {
+            boolean isEnabled2 = JWT.decode(token).getClaim("isEnabled").asBoolean();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         boolean isEnabled = JWT.decode(token).getClaim("isEnabled").asBoolean();
 
         // List<RoleDto> roles = Arrays.stream(rolesString.split(" "))
@@ -99,6 +107,10 @@ public class JwtService {
                 .sAMAccountName(email)
                 .isEnable(isEnabled)
                 .build();
+    }
+
+    public List<String> getRolesToken(String token) {
+        return getDecodedJWT(token).getClaim("roles").asList(String.class);
     }
 
     public String validateFirma(String token) {
@@ -151,6 +163,13 @@ public class JwtService {
         System.out.println("Issu" + JWT.decode(token).getExpiresAt());
 
         return JWT.decode(token).getExpiresAt();
+    }
+
+    // Decodificar el token
+    private DecodedJWT getDecodedJWT(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(token);
     }
 
 }

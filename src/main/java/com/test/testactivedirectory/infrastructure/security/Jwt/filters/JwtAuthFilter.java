@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -44,20 +47,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      */
     private List<String> urlsToSkip = List.of(
             "/api/v1/auth",
-            "/api/v1/",
+            "/api/v1/auth/**",
             "/auth",
             "/auth/",
             "/swagger-ui.html",
-            "/swagger-ui",
-            "/api-docs",
-            "/user/",
-            "/api/v1/user/synchronize",
-            "/user/synchronize",
-            "/role/**",
-            "/log/",
-            "/api/csv/cargar",
-            "/api/csv/carGen",
-            "/test");
+            "/swagger-ui"
+    // "/api-docs",
+    // "/user/",
+    // "/api/v1/user/synchronize",
+    // "/user/synchronize",
+    // "/log/",
+    // "/api/csv/cargar",
+    // "/api/csv/carGen",
+    // "/test"
+    );
 
     /**
      * Verifica si a la URI no se le debe aplicar el filtro
@@ -73,6 +76,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         System.out.println("headers:" + request);
         System.out.println("headers:" + request.getHeaders(HttpHeaders.AUTHORIZATION).toString());
         String requestUri = request.getRequestURI();
+        boolean test = urlsToSkip.stream().anyMatch(uri -> requestUri.startsWith(uri));
         return urlsToSkip.stream().anyMatch(uri -> requestUri.startsWith(uri));
     }
 
@@ -99,10 +103,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         System.out.println("=======header +  jwtauth" + header);
 
-        // if (header == null) {
-        // throw new UnauthorizedException("No tiene los permisos necesarios del
-        // header");
-        // }
         if (header.isEmpty() || !header.startsWith("Bearer ") || header.split(" ").length != 2) {
             filterChain.doFilter(request, response);
             return;
@@ -122,11 +122,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String isTokenInvalidateFirma = jwtService.validateFirma(header.split(" ")[1]);
 
         if (isTokenInvalidateFirma != null) {
-
             responseHandler(response, isTokenInvalidateFirma, HttpServletResponse.SC_FORBIDDEN);
-
             return;
         }
+
         // valida si el usuario esta activo o no
         boolean isEnableEmail = validateIsEnableEmail(header.split(" ")[1]);
 
@@ -149,9 +148,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
+        // Obtener roles
+        List<String> roles = this.jwtService.getRolesToken(header.split(" ")[1]);
+
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
         try {
 
-            Authentication auth = jwtAuthenticationProvider.createAuthentication(header.split(" ")[1]);
+            // Authentication auth =
+            // jwtAuthenticationProvider.createAuthentication(header.split(" ")[1]);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                    this.jwtService.getClaimUserName(header.split(" ")[1]), null, authorities);
 
             System.out.println("llegooo hasta autothentication salida de validatetoken" + auth);
 

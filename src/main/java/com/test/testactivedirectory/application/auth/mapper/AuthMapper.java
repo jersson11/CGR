@@ -27,6 +27,7 @@ public enum AuthMapper implements Function<UserModel, AuthRequestDto> {
     private AuthResponseDto mapToAuthResponseDto(String sAMAccountName) {
         return AuthResponseDto.builder()
                 .sAMAccountName(sAMAccountName)
+                .isEnable(true)
                 .build();
     }
 

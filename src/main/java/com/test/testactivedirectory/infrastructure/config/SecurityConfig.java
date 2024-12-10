@@ -14,7 +14,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.test.testactivedirectory.infrastructure.exception.component.AccessDeniedHandlerException;
 import com.test.testactivedirectory.infrastructure.security.Jwt.filters.JwtAuthFilter;
-import com.test.testactivedirectory.infrastructure.security.helper.RoleUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
@@ -31,34 +30,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        // RequestMatcher authMatcher = new MvcRequestMatcher(new
-        // HandlerMappingIntrospector(), "/auth/**");
-
-        http.sessionManagement(
-                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .exceptionHandling(t -> t.accessDeniedHandler(accessDeniedHandlerException))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**", "/api/v1/auth/**", "/auth**").permitAll();
-                    auth.requestMatchers("/test").permitAll();
-                    auth.requestMatchers("/api/v1/menu/**").permitAll();
-                    auth.requestMatchers("/api/v1/log/**").permitAll();
-                    auth.requestMatchers("/api/v1/role/**").permitAll();
-                    auth.requestMatchers("/api/v1/user/**").permitAll();
-                    auth.requestMatchers("/api/csv/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasAnyRole(RoleUtil.ADMIN, RoleUtil.FUNCIONARIO,
-                            RoleUtil.Usuario);
-                    auth.requestMatchers("/user/**").hasAnyRole(RoleUtil.FUNCIONARIO,
-                            RoleUtil.ADMIN, RoleUtil.Usuario);
+                    auth.requestMatchers("/api/v1/role/**").hasAnyAuthority("administrador");
+                    auth.requestMatchers("/api/v1/log/**").hasAnyAuthority("analista");
+                    auth.requestMatchers("/api/v1/menu/**").hasAnyAuthority("administrador");
+                    auth.requestMatchers("/api/v1/user/**").hasAnyAuthority("administrador");
+
                     auth.anyRequest().authenticated();
                 });
-
-        // http.exceptionHandling(exceptions -> exceptions
-        // .authenticationEntryPoint(customAuthenticationEntryPoint)
-        // .accessDeniedHandler(customAccessDeniedHandler));
 
         http.headers(headers -> headers
                 .httpStrictTransportSecurity(hsts -> hsts

@@ -1,7 +1,9 @@
 package com.test.testactivedirectory.infrastructure.security.Jwt.providers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
 import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
 import com.test.testactivedirectory.infrastructure.exception.customException.InvalidVerificationTokenException;
+import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 import com.test.testactivedirectory.infrastructure.security.Jwt.services.JwtService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,15 +47,14 @@ public class JwtAuthenticationProvider {
      * @return Jwt creado
      * @throws JsonProcessingException
      */
-    public String createToken(AuthResponseDto customerJwt) throws JsonProcessingException {
+    public String createToken(AuthResponseDto customerJwt, List<RoleEntity> roles) throws JsonProcessingException {
 
-        String tokenCreated = jwtService.createToken(customerJwt);
+        String tokenCreated = jwtService.createToken(customerJwt, roles);
 
         listToken.put(tokenCreated, customerJwt);
 
         return tokenCreated;
     }
-    
 
     /**
      * Valida si el token es valido y retorna una sesión del usuario
@@ -130,13 +132,14 @@ public class JwtAuthenticationProvider {
 
     }
 
+    // TODO hay que hacer para que aquí se obtengan los roles del token
     public String refresToken(String token) throws JsonProcessingException {
         try {
             AuthResponseDto userDto = jwtService.getUserDto(token);
 
             if (deleteToken(token).equals(" sesion cerrada")) {
-
-                return createToken(userDto);
+                List<RoleEntity> roles = new ArrayList<>();
+                return createToken(userDto, roles);
             }
             return "";
 

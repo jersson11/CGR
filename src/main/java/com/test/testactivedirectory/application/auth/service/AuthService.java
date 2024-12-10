@@ -2,6 +2,7 @@ package com.test.testactivedirectory.application.auth.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import com.test.testactivedirectory.application.auth.usecase.IAuthUseCase;
 import com.test.testactivedirectory.domain.models.UserModel;
 import com.test.testactivedirectory.domain.repository.IActiveDirectoryUserRepository;
 import com.test.testactivedirectory.domain.repository.IUserRepository;
+import com.test.testactivedirectory.infrastructure.persistence.entity.UserEntity;
+import com.test.testactivedirectory.infrastructure.persistence.repository.user.UserRepositoryJpa;
 import com.test.testactivedirectory.infrastructure.security.Jwt.providers.JwtAuthenticationProvider;
 import com.test.testactivedirectory.application.logs.usecase.LogUseCase;
 
@@ -24,6 +27,9 @@ import lombok.AllArgsConstructor;
 public class AuthService implements IAuthUseCase {
 
     private final IUserRepository userRepository;
+
+    private final UserRepositoryJpa userRepositoryWithRoles;
+
     private final IActiveDirectoryUserRepository activeDirectoryUserRepository;
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
@@ -43,9 +49,11 @@ public class AuthService implements IAuthUseCase {
             System.err.println("userModel: " + userModel);
             if (userModel != null && userModel.getPassword().equals(userRequest.getPassword())) {
 
+                Optional<UserEntity> userOptional = this.userRepositoryWithRoles
+                        .findBySAMAccountName(userRequest.getSAMAccountName());
                 AuthResponseDto userDto = AuthMapper.INSTANCE.toAuthResponDto(userModel);
 
-                String token = jwtAuthenticationProvider.createToken(userDto);
+                String token = jwtAuthenticationProvider.createToken(userDto, userOptional.get().getRoles());
 
                 userDto.setToken(token);
                 userDto.setIsEnable(true);
@@ -81,9 +89,12 @@ public class AuthService implements IAuthUseCase {
             if (isAccountValid) {
 
                 this.logService.createLog(userRequest.getSAMAccountName());
+
+                UserEntity user = this.userRepositoryWithRoles
+                        .findBySAMAccountNameWithRoles(userRequest.getSAMAccountName()).get();
                 AuthResponseDto userRequestDto = AuthMapper.INSTANCE.toAuthResponDto(userRequest);
 
-                String token = jwtAuthenticationProvider.createToken(userRequestDto);
+                String token = jwtAuthenticationProvider.createToken(userRequestDto, user.getRoles());
 
                 userRequestDto.setToken(token);
                 userRequestDto.setIsEnable(true);
