@@ -38,7 +38,8 @@ public class UserController extends AbstractController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody UserWithRolesRequestDto rolesRequestDto, BindingResult result) {
+    public ResponseEntity<?> assignRole(@Valid @RequestBody UserWithRolesRequestDto rolesRequestDto,
+            BindingResult result) {
         return this.processRequest(result,
                 () -> ResponseEntity.ok(this.userService.assignRolesToUser(rolesRequestDto)));
     }

@@ -40,13 +40,7 @@ public class UserRepositoryAdapterImpl implements IUserRoleRepository {
                         "el usuario con id=" + requestDto.getIdUser() + " no existe"));
 
         List<RoleEntity> roles = this.roleRepositoryJpa.findByIdIn(requestDto.getRoleIds());
-
-        roles.forEach(role -> {
-            if (!user.getRoles().contains(role)) {
-                user.getRoles().add(role);
-            }
-        });
-
+        user.setRoles(roles);
         return this.userRepositoryJpa.save(user);
     }
 
