@@ -8,14 +8,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.test.testactivedirectory.infrastructure.persistence.entity.Menu.SubMenuEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -55,6 +59,10 @@ public class RoleEntity {
     @ManyToMany(mappedBy = "roles")
     private List<UserEntity> users;
 
-    
+    @ManyToMany
+    @JsonIgnoreProperties({ "roles", "handler", "hibernateLazyInitializer" })
+    @JoinTable(name = "roles_submenu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "submenu_id"), uniqueConstraints = {
+            @UniqueConstraint(columnNames = { "role_id", "submenu_id" }) })
+    private List<SubMenuEntity> subMenus;
 
 }

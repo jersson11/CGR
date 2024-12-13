@@ -19,12 +19,9 @@ public class AuthController {
 
     private final IAuthUseCase authUseCase;
 
-
-
     public AuthController(IAuthUseCase authUseCase) {
         this.authUseCase = authUseCase;
     }
-
 
     @GetMapping("/health")
     public ResponseEntity<String> checkHealth() {
@@ -32,16 +29,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequestDto request, final HttpServletRequest servletRequest) throws JsonProcessingException {
+    public ResponseEntity<?> login(@RequestBody AuthRequestDto request, final HttpServletRequest servletRequest)
+            throws JsonProcessingException {
 
         return ResponseEntity.ok(authUseCase.signIn(request, servletRequest));
 
     }
 
-
-
     @PostMapping("/loginActiveDirectory")
-    public ResponseEntity<?> loginActiveDirectory(@RequestBody AuthRequestDto request, final HttpServletRequest servletRequest) throws JsonProcessingException {
+    public ResponseEntity<?> loginActiveDirectory(@RequestBody AuthRequestDto request,
+            final HttpServletRequest servletRequest) throws JsonProcessingException {
 
         return ResponseEntity.ok(authUseCase.authWithLDAPActiveDirectory(request, servletRequest));
 
