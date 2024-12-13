@@ -10,7 +10,6 @@ import com.test.testactivedirectory.application.user.dto.UserWithRolesRequestDto
 import com.test.testactivedirectory.application.user.dto.UserWithRolesResponseDto;
 import com.test.testactivedirectory.application.user.usecase.UserUseCase;
 import com.test.testactivedirectory.domain.repository.IUserRoleRepository;
-import com.test.testactivedirectory.infrastructure.utilities.DtoMapper;
 import com.test.testactivedirectory.infrastructure.persistence.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +19,6 @@ import lombok.AllArgsConstructor;
 public class UserServiceImpl implements UserUseCase {
 
     private final IUserRoleRepository userRoleRepository;
-
-    private final DtoMapper dtoMapper;
 
     @Transactional(readOnly = true)
     @Override

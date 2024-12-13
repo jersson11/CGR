@@ -141,7 +141,6 @@ public class LDAPUsuarioRepository implements IActiveDirectoryUserRepository {
         try {
             // Formato original: yyyyMMddHHmmss.0Z
             SimpleDateFormat adFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-            SimpleDateFormat desiredFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             // Remover ".0Z" del valor original
             if (whenChanged.contains(".")) {

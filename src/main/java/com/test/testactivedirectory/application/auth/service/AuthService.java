@@ -1,13 +1,9 @@
 package com.test.testactivedirectory.application.auth.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +19,6 @@ import com.test.testactivedirectory.domain.repository.IUserRepository;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 import com.test.testactivedirectory.infrastructure.persistence.entity.UserEntity;
 import com.test.testactivedirectory.infrastructure.persistence.entity.Menu.Menu;
-import com.test.testactivedirectory.infrastructure.persistence.entity.Menu.SubMenuEntity;
 import com.test.testactivedirectory.infrastructure.persistence.repository.user.UserRepositoryJpa;
 import com.test.testactivedirectory.infrastructure.security.Jwt.providers.JwtAuthenticationProvider;
 import com.test.testactivedirectory.application.logs.usecase.LogUseCase;

@@ -2,15 +2,10 @@ package com.test.testactivedirectory.infrastructure.security.Jwt.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,8 +17,6 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
-import com.test.testactivedirectory.application.role.dto.RoleDto;
-import com.test.testactivedirectory.application.user.dto.UserDto;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;
 
 import lombok.extern.slf4j.Slf4j;
@@ -91,12 +84,6 @@ public class JwtService {
     public AuthResponseDto getUserDto(String token) throws JsonProcessingException {
 
         String email = JWT.decode(token).getClaim("userName").asString();
-
-        try {
-            boolean isEnabled2 = JWT.decode(token).getClaim("isEnabled").asBoolean();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         boolean isEnabled = JWT.decode(token).getClaim("isEnabled").asBoolean();
 
         // List<RoleDto> roles = Arrays.stream(rolesString.split(" "))
@@ -123,7 +110,7 @@ public class JwtService {
                     .build();
 
             // Validar el token (si es inválido, lanzará una excepción)
-            DecodedJWT jwt = verifier.verify(token);
+            verifier.verify(token);
 
             // Si el token es válido, devuelve null
             return null;

@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -52,14 +51,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/auth/",
             "/swagger-ui.html",
             "/swagger-ui"
-    // "/api-docs",
-    // "/user/",
-    // "/api/v1/user/synchronize",
-    // "/user/synchronize",
-    // "/log/",
-    // "/api/csv/cargar",
-    // "/api/csv/carGen",
-    // "/test"
     );
 
     /**
@@ -76,7 +67,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         System.out.println("headers:" + request);
         System.out.println("headers:" + request.getHeaders(HttpHeaders.AUTHORIZATION).toString());
         String requestUri = request.getRequestURI();
-        boolean test = urlsToSkip.stream().anyMatch(uri -> requestUri.startsWith(uri));
         return urlsToSkip.stream().anyMatch(uri -> requestUri.startsWith(uri));
     }
 

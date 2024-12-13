@@ -1,7 +1,5 @@
 package com.test.testactivedirectory.infrastructure.persistence.adapter;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.test.testactivedirectory.application.auth.mapper.UserMapper;

@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.Authentication;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
 import com.test.testactivedirectory.application.auth.dto.AuthResponseDto;
 import com.test.testactivedirectory.infrastructure.exception.customException.InvalidVerificationTokenException;
 import com.test.testactivedirectory.infrastructure.persistence.entity.RoleEntity;

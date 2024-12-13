@@ -3,7 +3,6 @@ package com.test.testactivedirectory.application.auth.usecase;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.test.testactivedirectory.application.auth.dto.RegistrationRequestDto;
 import com.test.testactivedirectory.application.auth.dto.AuthRequestDto;
 
 import jakarta.servlet.http.HttpServletRequest;

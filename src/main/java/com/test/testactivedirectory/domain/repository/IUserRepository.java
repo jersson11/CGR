@@ -1,7 +1,5 @@
 package com.test.testactivedirectory.domain.repository;
 
-import java.util.List;
-
 import com.test.testactivedirectory.domain.models.UserModel;
 
 public interface IUserRepository {
