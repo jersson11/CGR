@@ -6,7 +6,7 @@ server:
 # Configuracion  de  la aplicacion  
 spring:
   application:
-    name: testactivedirectory    
+    name: baseapp
   profiles:
     active: dev  # Cambia esto según el entorno: dev, qa, prod
   #Configuración de la base de datos MySQL

@@ -9,11 +9,11 @@
 		<version>3.4.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.test</groupId>
-	<artifactId>testactivedirectory</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>testactivedirectory</name>
-	<description>directorio activo</description>
+	<groupId>com.cgr</groupId>
+	<artifactId>baseapp</artifactId>
+	<version>1.0</version>
+	<name>baseapp</name>
+	<description>plantilla base para proyectos de cgr</description>
 	<url />
 	<licenses>
 		<license />
