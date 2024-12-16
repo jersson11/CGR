@@ -1,6 +1,5 @@
 package com.cgr.base.infrastructure.exception.restException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,10 +13,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.cgr.base.infrastructure.exception.customException.InvalidVerificationTokenException;
 import com.cgr.base.infrastructure.exception.customException.ResourceNotFoundException;
-import com.cgr.base.infrastructure.exception.dto.ErrorDto;
+import com.cgr.base.presentation.controller.AbstractController;
 
 @RestControllerAdvice
-public class GlobalRegistrationExceptionHandler {
+public class GlobalRegistrationExceptionHandler extends AbstractController {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidVerificationTokenException.class)
@@ -28,21 +27,17 @@ public class GlobalRegistrationExceptionHandler {
     }
 
     @ExceptionHandler({ ResourceNotFoundException.class, NoHandlerFoundException.class })
-    ResponseEntity<ErrorDto> notFound(Exception ex) {
+    ResponseEntity<?> notFound(Exception ex) {
         return this.throwErrorMessage(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({ HttpMessageNotReadableException.class })
-    ResponseEntity<ErrorDto> throwBadRequest(Exception ex) {
+    ResponseEntity<?> throwBadRequest(Exception ex) {
         return this.throwErrorMessage(ex, HttpStatus.BAD_REQUEST);
     }
 
-    private ResponseEntity<ErrorDto> throwErrorMessage(Exception ex, HttpStatus httpStatus) {
-        ErrorDto errorDto = new ErrorDto(ex.getMessage(),
-                ex.getClass().toString(),
-                httpStatus.value(),
-                new Date());
-        return ResponseEntity.status(httpStatus).body(errorDto);
+    private ResponseEntity<?> throwErrorMessage(Exception ex, HttpStatus httpStatus) {
+        return requestResponse(null, ex.getMessage(), httpStatus, false);
     }
 
 }

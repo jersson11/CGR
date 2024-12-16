@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.cgr.base.infrastructure.persistence.entity.Menu.SubMenuEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -61,6 +62,7 @@ public class RoleEntity {
 
     @ManyToMany
     @JsonIgnoreProperties({ "roles", "handler", "hibernateLazyInitializer" })
+    @JsonIgnore
     @JoinTable(name = "roles_submenu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "submenu_id"), uniqueConstraints = {
             @UniqueConstraint(columnNames = { "role_id", "submenu_id" }) })
     private List<SubMenuEntity> subMenus;
