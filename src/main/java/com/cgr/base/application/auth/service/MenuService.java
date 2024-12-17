@@ -7,14 +7,14 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.cgr.base.infrastructure.persistence.entity.Menu.Menu;
-import com.cgr.base.infrastructure.persistence.repository.menu.MenuRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.menu.IMenuRepositoryJpa;
 
 @Service
 public class MenuService {
 
-    private final MenuRepositoryJpa menuRepositoryJpa;
+    private final IMenuRepositoryJpa menuRepositoryJpa;
 
-    public MenuService(MenuRepositoryJpa menuRepositoryJpa) {
+    public MenuService(IMenuRepositoryJpa menuRepositoryJpa) {
         this.menuRepositoryJpa = menuRepositoryJpa;
     }
 

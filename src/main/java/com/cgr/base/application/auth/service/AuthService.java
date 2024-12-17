@@ -12,14 +12,14 @@ import com.cgr.base.application.auth.dto.AuthRequestDto;
 import com.cgr.base.application.auth.dto.AuthResponseDto;
 import com.cgr.base.application.auth.mapper.AuthMapper;
 import com.cgr.base.application.auth.usecase.IAuthUseCase;
-import com.cgr.base.application.logs.usecase.LogUseCase;
+import com.cgr.base.application.logs.usecase.ILogUseCase;
 import com.cgr.base.domain.models.UserModel;
 import com.cgr.base.domain.repository.IActiveDirectoryUserRepository;
 import com.cgr.base.domain.repository.IUserRepository;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 import com.cgr.base.infrastructure.persistence.entity.UserEntity;
 import com.cgr.base.infrastructure.persistence.entity.Menu.Menu;
-import com.cgr.base.infrastructure.persistence.repository.user.UserRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.user.IUserRepositoryJpa;
 import com.cgr.base.infrastructure.security.Jwt.providers.JwtAuthenticationProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -32,13 +32,13 @@ public class AuthService implements IAuthUseCase {
 
     private final IUserRepository userRepository;
 
-    private final UserRepositoryJpa userRepositoryFull;
+    private final IUserRepositoryJpa userRepositoryFull;
 
     private final IActiveDirectoryUserRepository activeDirectoryUserRepository;
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
-    private final LogUseCase logService;
+    private final ILogUseCase logService;
 
     @Transactional
     @Override
@@ -110,7 +110,8 @@ public class AuthService implements IAuthUseCase {
                 userRequestDto.setToken(token);
                 userRequestDto.setIsEnable(true);
 
-                this.logService.createLog(userRequest.getSAMAccountName());
+                userRequest.setEmail(user.getEmail());
+                this.logService.createLog(userRequest);
 
                 response.put("user", userRequestDto);
                 response.put("message", "User authenticated successfully");

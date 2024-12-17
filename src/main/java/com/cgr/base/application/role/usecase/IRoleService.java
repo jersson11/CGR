@@ -5,7 +5,7 @@ import java.util.List;
 import com.cgr.base.application.role.dto.RoleRequestDto;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 
-public interface RoleService {
+public interface IRoleService {
     public abstract List<RoleRequestDto> findAll();
 
     public abstract RoleRequestDto findById(Long idRole);

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cgr.base.application.role.dto.RoleRequestDto;
-import com.cgr.base.application.role.usecase.RoleService;
+import com.cgr.base.application.role.usecase.IRoleService;
 import com.cgr.base.domain.repository.IRoleRepository;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 import com.cgr.base.infrastructure.utilities.DtoMapper;
@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl implements IRoleService {
 
     private final IRoleRepository roleRepository;
 

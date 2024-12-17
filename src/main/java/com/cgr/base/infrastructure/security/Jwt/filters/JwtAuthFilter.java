@@ -92,13 +92,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         System.out.println("=======header +  jwtauth" + header);
 
+        if (header == null) {
+            responseHandler(response, "Token requerido", HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
         if (header.isEmpty() || !header.startsWith("Bearer ") || header.split(" ").length != 2) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // validacion para token expirado
-        String isTokenExpiredException = jwtService.isTokenExpired(header.split(" ")[1]);
+        String isTokenExpiredException = "";
+        try {
+            isTokenExpiredException = jwtService.isTokenExpired(header.split(" ")[1]);
+        } catch (Exception e) {
+            responseHandler(response, "Token no válido", HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
 
         if (isTokenExpiredException != null) {
 

@@ -10,17 +10,17 @@ import com.cgr.base.domain.repository.ILogRepository;
 import com.cgr.base.infrastructure.exception.customException.ResourceNotFoundException;
 import com.cgr.base.infrastructure.persistence.entity.LogEntity;
 import com.cgr.base.infrastructure.persistence.entity.UserEntity;
-import com.cgr.base.infrastructure.persistence.repository.logs.LogsRepositoryJpa;
-import com.cgr.base.infrastructure.persistence.repository.user.UserRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.logs.ILogsRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.user.IUserRepositoryJpa;
 
 @Component
 public class LogRepositoryAdapterImpl implements ILogRepository {
 
-    private final LogsRepositoryJpa logRepositoryJpa;
+    private final ILogsRepositoryJpa logRepositoryJpa;
 
-    private final UserRepositoryJpa userRepositoryJpa;
+    private final IUserRepositoryJpa userRepositoryJpa;
 
-    public LogRepositoryAdapterImpl(LogsRepositoryJpa logRepositoryJpa, UserRepositoryJpa userRepositoryJpa) {
+    public LogRepositoryAdapterImpl(ILogsRepositoryJpa logRepositoryJpa, IUserRepositoryJpa userRepositoryJpa) {
         this.logRepositoryJpa = logRepositoryJpa;
         this.userRepositoryJpa = userRepositoryJpa;
     }

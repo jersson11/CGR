@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 
 @Repository
-public interface RoleRepositoryJpa extends JpaRepository<RoleEntity, Long> {
+public interface IRoleRepositoryJpa extends JpaRepository<RoleEntity, Long> {
 
     // Método para encontrar todos los roles cuyo ID esté en una lista de IDs
     List<RoleEntity> findByIdIn(List<Long> ids);

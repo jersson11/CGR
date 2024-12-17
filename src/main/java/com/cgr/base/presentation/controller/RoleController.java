@@ -1,8 +1,5 @@
 package com.cgr.base.presentation.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cgr.base.application.role.dto.RoleRequestDto;
-import com.cgr.base.application.role.usecase.RoleService;
+import com.cgr.base.application.role.usecase.IRoleService;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 
 import jakarta.validation.Valid;
@@ -24,38 +21,36 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/role")
 public class RoleController extends AbstractController {
 
-    private RoleService roleService;
+    private IRoleService roleService;
 
-    public RoleController(RoleService roleService) {
+    public RoleController(IRoleService roleService) {
         this.roleService = roleService;
     }
 
     @GetMapping
-    public Map<String, Object> getAll() {
-        Map<String, Object> json = new HashMap<>();
-        json.put("roles", this.roleService.findAll());
-        return json;
+    public ResponseEntity<?> getAll() {
+        return requestResponse(this.roleService.findAll(), "roles del sistema");
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.roleService.findById(id));
+        return requestResponse(this.roleService.findById(id), "rol encontrado");
     }
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody RoleEntity role, BindingResult result) {
-        return this.processRequest(result, () -> ResponseEntity.ok(this.roleService.create(role)));
+        return requestResponse(this.roleService.create(role), "rol creado");
     }
 
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody RoleEntity role, BindingResult result) {
-        return this.processRequest(result, () -> ResponseEntity.ok(this.roleService.update(role)));
+        return requestResponse(this.roleService.update(role), "rol actualizado");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         RoleRequestDto role = this.roleService.activateOrDeactivate(id);
-        return ResponseEntity.ok(role);
+        return requestResponse(role, role.isEnable() ? "rol activado" : "rol desactivado");
     }
 
 }

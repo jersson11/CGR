@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cgr.base.application.user.dto.UserWithRolesRequestDto;
 import com.cgr.base.application.user.dto.UserWithRolesResponseDto;
-import com.cgr.base.application.user.usecase.UserUseCase;
+import com.cgr.base.application.user.usecase.IUserUseCase;
 import com.cgr.base.domain.repository.IUserRoleRepository;
 import com.cgr.base.infrastructure.persistence.entity.UserEntity;
 
@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserUseCase {
+public class UserServiceImpl implements IUserUseCase {
 
     private final IUserRoleRepository userRoleRepository;
 
@@ -49,6 +49,12 @@ public class UserServiceImpl implements UserUseCase {
         var userResponsive = new UserWithRolesResponseDto();
         userResponsive.setIdUser(userEntity.getId());
         userResponsive.setUserName(userEntity.getSAMAccountName());
+        userResponsive.setFullName(userEntity.getFullName());
+        userResponsive.setEmail(userEntity.getEmail());
+        userResponsive.setPhone(userEntity.getPhone());
+        userResponsive.setEnabled(userEntity.getEnabled());
+        userResponsive.setDateModify(userEntity.getDateModify());
+        userResponsive.setCargo(userEntity.getCargo());
         userResponsive.addRole(userEntity.getRoles());
         return userResponsive;
     }

@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.cgr.base.application.auth.dto.AuthRequestDto;
 import com.cgr.base.application.logs.dto.LogDto;
-import com.cgr.base.application.logs.usecase.LogUseCase;
+import com.cgr.base.application.logs.usecase.ILogUseCase;
 import com.cgr.base.domain.repository.ILogRepository;
 import com.cgr.base.infrastructure.persistence.entity.LogEntity;
 import com.cgr.base.infrastructure.utilities.DtoMapper;
@@ -15,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class LogService implements LogUseCase {
+public class LogService implements ILogUseCase {
 
     private final ILogRepository adapterLogRepository;
 
@@ -27,9 +28,9 @@ public class LogService implements LogUseCase {
     }
 
     @Override
-    public LogEntity createLog(String userName) {
-        LogEntity logEntity = new LogEntity("n/a", new Date(), true, userName);
-        return this.adapterLogRepository.createLog(logEntity, userName);
+    public LogEntity createLog(AuthRequestDto userRequest) {
+        LogEntity logEntity = new LogEntity(userRequest.getEmail(), new Date(), true, userRequest.getSAMAccountName());
+        return this.adapterLogRepository.createLog(logEntity, userRequest.getSAMAccountName());
     }
 
 }

@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cgr.base.application.user.usecase.UserSynchronizerUseCase;
+import com.cgr.base.application.user.usecase.IUserSynchronizerUseCase;
 import com.cgr.base.domain.repository.IActiveDirectoryUserRepository;
 import com.cgr.base.infrastructure.persistence.entity.UserEntity;
-import com.cgr.base.infrastructure.persistence.repository.user.UserRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.user.IUserRepositoryJpa;
 
 @Service
-public class SyncActiveDirectoryUsers implements UserSynchronizerUseCase {
+public class SyncActiveDirectoryUsers implements IUserSynchronizerUseCase {
 
     @Autowired
     private IActiveDirectoryUserRepository directoryUserRepository;
 
     @Autowired
-    private UserRepositoryJpa userRepositoryDB;
+    private IUserRepositoryJpa userRepositoryDB;
 
     @Transactional
     @Override

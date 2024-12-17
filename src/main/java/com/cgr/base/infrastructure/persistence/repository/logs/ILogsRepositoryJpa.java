@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cgr.base.infrastructure.persistence.entity.LogEntity;
 
 @Repository
-public interface LogsRepositoryJpa extends JpaRepository<LogEntity, Long> {
+public interface ILogsRepositoryJpa extends JpaRepository<LogEntity, Long> {
     
 }

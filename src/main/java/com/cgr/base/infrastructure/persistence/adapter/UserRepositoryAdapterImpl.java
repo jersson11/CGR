@@ -10,17 +10,17 @@ import com.cgr.base.domain.repository.IUserRoleRepository;
 import com.cgr.base.infrastructure.exception.customException.ResourceNotFoundException;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 import com.cgr.base.infrastructure.persistence.entity.UserEntity;
-import com.cgr.base.infrastructure.persistence.repository.role.RoleRepositoryJpa;
-import com.cgr.base.infrastructure.persistence.repository.user.UserRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.role.IRoleRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.user.IUserRepositoryJpa;
 
 @Component
 public class UserRepositoryAdapterImpl implements IUserRoleRepository {
 
-    private final UserRepositoryJpa userRepositoryJpa;
+    private final IUserRepositoryJpa userRepositoryJpa;
 
-    private final RoleRepositoryJpa roleRepositoryJpa;
+    private final IRoleRepositoryJpa roleRepositoryJpa;
 
-    public UserRepositoryAdapterImpl(UserRepositoryJpa userRepositoryJpa, RoleRepositoryJpa roleRepositoryJpa) {
+    public UserRepositoryAdapterImpl(IUserRepositoryJpa userRepositoryJpa, IRoleRepositoryJpa roleRepositoryJpa) {
         this.userRepositoryJpa = userRepositoryJpa;
         this.roleRepositoryJpa = roleRepositoryJpa;
     }

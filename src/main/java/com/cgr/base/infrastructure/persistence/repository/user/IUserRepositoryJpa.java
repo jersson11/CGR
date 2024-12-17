@@ -13,7 +13,7 @@ import com.cgr.base.infrastructure.persistence.entity.Menu.Menu;
 import com.cgr.base.infrastructure.persistence.entity.Menu.SubMenuEntity;
 
 @Repository
-public interface UserRepositoryJpa extends JpaRepository<UserEntity, Long> {
+public interface IUserRepositoryJpa extends JpaRepository<UserEntity, Long> {
 
         @Query("SELECT u FROM UserEntity u WHERE u.sAMAccountName = :sAMAccountName")
         Optional<UserEntity> findBySAMAccountName(@Param("sAMAccountName") String sAMAccountName);

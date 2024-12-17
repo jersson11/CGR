@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.cgr.base.infrastructure.exception.customException.InvalidVerificationTokenException;
@@ -31,9 +32,14 @@ public class GlobalRegistrationExceptionHandler extends AbstractController {
         return this.throwErrorMessage(ex, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({ HttpMessageNotReadableException.class })
+    @ExceptionHandler({ HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class })
     ResponseEntity<?> throwBadRequest(Exception ex) {
         return this.throwErrorMessage(ex, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({ RuntimeException.class, Exception.class })
+    ResponseEntity<?> throwUnknownError(Exception ex) {
+        return this.throwErrorMessage(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private ResponseEntity<?> throwErrorMessage(Exception ex, HttpStatus httpStatus) {

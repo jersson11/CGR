@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cgr.base.domain.repository.IRoleRepository;
 import com.cgr.base.infrastructure.exception.customException.ResourceNotFoundException;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
-import com.cgr.base.infrastructure.persistence.repository.role.RoleRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.role.IRoleRepositoryJpa;
 
 @Component
 public class RoleRepositoryAdapterImpl implements IRoleRepository {
 
-    private final RoleRepositoryJpa roleRepositoryJpa;
+    private final IRoleRepositoryJpa roleRepositoryJpa;
 
-    public RoleRepositoryAdapterImpl(RoleRepositoryJpa roleRepositoryJpa) {
+    public RoleRepositoryAdapterImpl(IRoleRepositoryJpa roleRepositoryJpa) {
         this.roleRepositoryJpa = roleRepositoryJpa;
     }
 

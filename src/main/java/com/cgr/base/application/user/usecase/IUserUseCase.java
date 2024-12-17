@@ -5,7 +5,7 @@ import java.util.List;
 import com.cgr.base.application.user.dto.UserWithRolesRequestDto;
 import com.cgr.base.application.user.dto.UserWithRolesResponseDto;
 
-public interface UserUseCase {
+public interface IUserUseCase {
 
     public abstract List<UserWithRolesResponseDto> findAll();
 

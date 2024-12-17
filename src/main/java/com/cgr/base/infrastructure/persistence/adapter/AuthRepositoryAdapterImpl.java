@@ -6,14 +6,14 @@ import com.cgr.base.application.auth.mapper.UserMapper;
 import com.cgr.base.domain.models.UserModel;
 import com.cgr.base.domain.repository.IUserRepository;
 import com.cgr.base.infrastructure.persistence.entity.UserEntity;
-import com.cgr.base.infrastructure.persistence.repository.auth.AuthRepositoryJpa;
+import com.cgr.base.infrastructure.persistence.repository.auth.IAuthRepositoryJpa;
 
 @Component
 public class AuthRepositoryAdapterImpl implements IUserRepository {
 
-  private final AuthRepositoryJpa authRepositoryJpa;
+  private final IAuthRepositoryJpa authRepositoryJpa;
 
-  public AuthRepositoryAdapterImpl(AuthRepositoryJpa authRepositoryJpa) {
+  public AuthRepositoryAdapterImpl(IAuthRepositoryJpa authRepositoryJpa) {
     this.authRepositoryJpa = authRepositoryJpa;
   }
 

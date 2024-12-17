@@ -1,8 +1,5 @@
 package com.cgr.base.presentation.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cgr.base.application.user.dto.UserWithRolesRequestDto;
-import com.cgr.base.application.user.usecase.UserSynchronizerUseCase;
-import com.cgr.base.application.user.usecase.UserUseCase;
+import com.cgr.base.application.user.usecase.IUserSynchronizerUseCase;
+import com.cgr.base.application.user.usecase.IUserUseCase;
 
 import jakarta.validation.Valid;
 
@@ -21,34 +18,30 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/user")
 public class UserController extends AbstractController {
 
-    private UserUseCase userService;
+    private IUserUseCase userService;
 
-    private UserSynchronizerUseCase synchronizerUsers;
+    private IUserSynchronizerUseCase synchronizerUsers;
 
-    public UserController(UserUseCase userService, UserSynchronizerUseCase synchronizerUsers) {
+    public UserController(IUserUseCase userService, IUserSynchronizerUseCase synchronizerUsers) {
         this.userService = userService;
         this.synchronizerUsers = synchronizerUsers;
     }
 
     @GetMapping
-    public Map<String, Object> getAll() {
-        Map<String, Object> json = new HashMap<>();
-        json.put("usuarios", this.userService.findAll());
-        return json;
+    public ResponseEntity<?> getAll() {
+        return requestResponse(this.userService.findAll(), "usuarios del sistema");
     }
 
     @PostMapping
     public ResponseEntity<?> assignRole(@Valid @RequestBody UserWithRolesRequestDto rolesRequestDto,
             BindingResult result) {
-        return this.processRequest(result,
-                () -> ResponseEntity.ok(this.userService.assignRolesToUser(rolesRequestDto)));
+        return requestResponse(this.userService.assignRolesToUser(rolesRequestDto), "roles actualizados");
     }
 
     @GetMapping("/synchronize")
-    public Map<String, Object> synchronizeAD() {
-        Map<String, Object> json = new HashMap<>();
-        json.put("sincronizacion", this.synchronizerUsers.synchronizeUsers());
-        return json;
+    public ResponseEntity<?> synchronizeAD() {
+        return requestResponse(this.synchronizerUsers.synchronizeUsers(),
+                "sistema sincronizado exitosamente con el Directorio Activo");
     }
 
 }
