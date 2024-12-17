@@ -15,7 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.Authentication;
 
 import com.cgr.base.application.auth.dto.AuthResponseDto;
-import com.cgr.base.infrastructure.exception.customException.InvalidVerificationTokenException;
+import com.cgr.base.infrastructure.exception.customExce.TokenException;
 import com.cgr.base.infrastructure.persistence.entity.RoleEntity;
 import com.cgr.base.infrastructure.security.Jwt.services.JwtService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -174,7 +174,7 @@ public class JwtAuthenticationProvider {
 
         if (!listToken.containsKey(jwt)) {
 
-            throw new InvalidVerificationTokenException(
+            throw new TokenException(
                     "token no existe , el usuario  ya cerro session");
         }
 

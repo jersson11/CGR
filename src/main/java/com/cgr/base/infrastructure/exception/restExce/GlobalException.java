@@ -1,4 +1,4 @@
-package com.cgr.base.infrastructure.exception.restException;
+package com.cgr.base.infrastructure.exception.restExce;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.cgr.base.infrastructure.exception.customException.InvalidVerificationTokenException;
-import com.cgr.base.infrastructure.exception.customException.ResourceNotFoundException;
+import com.cgr.base.infrastructure.exception.customExce.ResourceNotFoundException;
+import com.cgr.base.infrastructure.exception.customExce.TokenException;
 import com.cgr.base.presentation.controller.AbstractController;
 
 @RestControllerAdvice
-public class GlobalRegistrationExceptionHandler extends AbstractController {
+public class GlobalException extends AbstractController {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(InvalidVerificationTokenException.class)
-    public Map<String, String> tokenNotFound(InvalidVerificationTokenException ex) {
+    @ExceptionHandler(TokenException.class)
+    public Map<String, String> tokenNotFound(TokenException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return error;
